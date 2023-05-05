@@ -13,16 +13,12 @@ public class PathGenerator : MonoBehaviour
     public Transform PathStart;
     public int seed;
 
-    //private int pathLengthRemaining = 0;
-    //private int rotationBias = 0;
     private Transform lastPos;
 
     void Start()
     {
         Random.InitState(seed);
         lastPos = PathStart;
-        //PathTile spawned = Instantiate(LeftTiles[0], nextPos.position, nextPos.rotation);
-        //nextPos = spawned.EndTransform;
     }
 
     public void GenerateToJunction(int length)
@@ -34,7 +30,52 @@ public class PathGenerator : MonoBehaviour
     {
         if (lengthRemaining > 0)
         {
-            StartCoroutine(GenerationToJunctionCoroutine(lengthRemaining, attachPoint, rotationBias));
+            float maxBias = 90f;
+            float leftProbability = 1f + rotationBias / maxBias;
+            float rightProbability = 1f - rotationBias / maxBias;
+            float straightProbability = 1f;
+
+            float remainingRotationLeft = 0f;
+            float remainingRotationRight = 0f;
+
+            remainingRotationLeft = -90f - rotationBias;
+            remainingRotationRight = 90f - rotationBias;
+
+            List<PathTile> filteredLeftTiles = LeftTiles.Where(pt => pt.Length <= lengthRemaining && pt.PathRotation >= remainingRotationLeft).ToList();
+            if (filteredLeftTiles.Count == 0) leftProbability = 0f;
+            List<PathTile> filteredStraightTiles = StraightTiles.Where(pt => pt.Length <= lengthRemaining).ToList();
+            if (filteredStraightTiles.Count == 0) straightProbability = 0f;
+            List<PathTile> filteredRightTiles = RightTiles.Where(pt => pt.Length <= lengthRemaining && pt.PathRotation <= remainingRotationRight).ToList();
+            if (filteredRightTiles.Count == 0) rightProbability = 0f;
+
+            float totalProbability = leftProbability + straightProbability + rightProbability;
+
+            if (totalProbability == 0f)
+            {
+                GenerateJunction();
+                return;
+            }
+
+            float rand = Random.Range(0f, totalProbability);
+
+            PathTile selectedItem = null;
+
+            if (rand < leftProbability)
+            {
+                selectedItem = filteredLeftTiles[Random.Range(0, filteredLeftTiles.Count)];
+            }
+            else if (rand < leftProbability + straightProbability)
+            {
+                selectedItem = filteredStraightTiles[Random.Range(0, filteredStraightTiles.Count)];
+            }
+            else
+            {
+                selectedItem = filteredRightTiles[Random.Range(0, filteredRightTiles.Count)];
+            }
+
+            PathTile spawnedTile = Instantiate(selectedItem, attachPoint.position, attachPoint.rotation);
+            lastPos = spawnedTile.EndTransform;
+            GenerateToJunctionRecursive(lengthRemaining - spawnedTile.Length, spawnedTile.EndTransform, rotationBias + spawnedTile.PathRotation);
         }
         else
         {
@@ -42,58 +83,10 @@ public class PathGenerator : MonoBehaviour
         }
     }
 
-    IEnumerator GenerationToJunctionCoroutine(int lengthRemaining, Transform attachPoint, int rotationBias)
-    {
-        yield return new WaitForSeconds(0.05f); // Wait for half a second
-        float maxBias = 90f;
-        float leftProbability = 1f + rotationBias / maxBias;
-        float rightProbability = 1f - rotationBias / maxBias;
-        float straightProbability = 1f;
-
-        float remainingRotationLeft = 0f;
-        float remainingRotationRight = 0f;
-
-        remainingRotationLeft = -90f - rotationBias;
-        remainingRotationRight = 90f - rotationBias;
-
-        List<PathTile> filteredLeftTiles = LeftTiles.Where(pt => pt.Length <= lengthRemaining && pt.PathRotation >= remainingRotationLeft).ToList();
-        if (filteredLeftTiles.Count == 0) leftProbability = 0f;
-        List<PathTile> filteredStraightTiles = StraightTiles.Where(pt => pt.Length <= lengthRemaining).ToList();
-        if (filteredStraightTiles.Count == 0) straightProbability = 0f;
-        List<PathTile> filteredRightTiles = RightTiles.Where(pt => pt.Length <= lengthRemaining && pt.PathRotation <= remainingRotationRight).ToList();
-        if (filteredRightTiles.Count == 0) rightProbability = 0f;
-
-        float totalProbability = leftProbability + straightProbability + rightProbability;
-        float rand = Random.Range(0f, totalProbability);
-
-        PathTile selectedItem = null;
-
-        if (rand < leftProbability)
-        {
-            selectedItem = filteredLeftTiles[Random.Range(0, filteredLeftTiles.Count)];
-        }
-        else if (rand < leftProbability + straightProbability)
-        {
-            selectedItem = filteredStraightTiles[Random.Range(0, filteredStraightTiles.Count)];
-        }
-        else
-        {
-            selectedItem = filteredRightTiles[Random.Range(0, filteredRightTiles.Count)];
-        }
-
-        PathTile spawnedTile = Instantiate(selectedItem, attachPoint.position, attachPoint.rotation);
-        lastPos = spawnedTile.EndTransform;
-        if ((lengthRemaining - spawnedTile.Length) > 0)
-        {
-            GenerateToJunctionRecursive(lengthRemaining - spawnedTile.Length, spawnedTile.EndTransform, rotationBias + spawnedTile.PathRotation);
-        }
-        else GenerateJunction();
-        //GenerateToJunctionRecursive(lengthRemaining, );
-    }
 
     public void GenerateJunction()
     {
-
+        // TODO: generate junction/split
     }
 
     [ContextMenu("Generate 1")]
@@ -107,7 +100,6 @@ public class PathGenerator : MonoBehaviour
     {
         GenerateToJunction(5);
     }
-
 
     [ContextMenu("Generate 100")]
     void GenLots()
