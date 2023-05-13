@@ -26,20 +26,29 @@ public class ProgressBar : MonoBehaviour
 #endif
 
     public float Maximum;
+    [SerializeField]
     private float _current;
+   
     public float Current
     {
         get { return _current; }
         set
         {
-            _current = value;
-            GetCurrentFill();
+            if (value < 0)
+            {
+                _current = 0;
+            }
+            else
+            {
+                _current = value;
+            }
+            SetCurrentFill();
         }
     }
 
     public Image _mask;
 
-    private void GetCurrentFill()
+    private void SetCurrentFill()
     {
         float fillAmount = _current / Maximum;
         _mask.fillAmount = fillAmount;
