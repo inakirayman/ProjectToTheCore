@@ -174,11 +174,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4991671428781510197}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05ef1314fbe5ed248a27e8a7b6d6e079, type: 3}
+  m_Script: {fileID: 11500000, guid: 40fb8ced9e70a1042ad51ff28de1bf20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PathRotation: 45
   StartTransform: {fileID: 7733305115840606516}
+  PathRotation: 45
   EndTransform: {fileID: 7230459684537407161}
   Length: 3
 --- !u!1 &7115270697629917746

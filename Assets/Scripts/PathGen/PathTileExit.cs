@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PathTile : MonoBehaviour
+public class PathTileExit : PathTile
 {
-    public Transform StartTransform;
+    public Transform EndTransform;
 }
