@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a5c5a6483b74349970753fef9aecf1, type: 3}
   m_Name: CoalOre
   m_EditorClassIdentifier: 
-  _hitPoint: 3
+  HitPoint: 3
   OreType: 0
+  OreVeinModel: {fileID: 2556243023022772287, guid: fa25374e5d87a4343930e9c9b1d50fc3,
+    type: 3}

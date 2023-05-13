@@ -10,9 +10,39 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private Transform _cameraTransform;
+    [SerializeField]
+    private LayerMask _oreLayer;
+    [SerializeField]
+    private LayerMask _orePickupLayer;
+    [SerializeField]
+    private LayerMask _minecartLayer;
+
+
+
+
+    [SerializeField]
+    private Transform _hands;
+    [SerializeField]
+    private GameObject _objectInHands = null;
+    public GameObject ObjectInHands
+    {
+        get { return _objectInHands; }
+        set
+        {
+            _objectInHands = value;
+            _isHoldingObject = (_objectInHands != null);
+        }
+    }
+
+    [SerializeField]
+    private float _detectedRadius = 1;
 
     private Vector2 _movementInput;
     private Rigidbody _rb;
+
+
+    private bool _isHoldingObject =false;
+
     
     void Start()
     {
@@ -31,6 +61,15 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_isHoldingObject)
+        {
+            _objectInHands.GetComponent<OreChunk>().rb.useGravity = false;
+            _objectInHands.GetComponent<OreChunk>().rb.MovePosition(_hands.position);
+        }
+
+
+
+
         // get input from the joystick axes
         float horizontalInput = _movementInput.x;
         float verticalInput = _movementInput.y;
@@ -63,5 +102,74 @@ public class PlayerController : MonoBehaviour
         _movementInput = context.ReadValue<Vector2>();
     }
 
+    public void Interact(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (!_isHoldingObject)
+            {
+                Collider[] colliders = Physics.OverlapSphere(transform.position, _detectedRadius, _orePickupLayer);
+                if (colliders.Length > 0)
+                {
 
+                    ObjectInHands = colliders[0].transform.parent.gameObject;
+                    return;
+                }
+                else
+                {
+                    Debug.Log("No item found.");
+                }
+
+
+                colliders = Physics.OverlapSphere(transform.position, _detectedRadius, _oreLayer);
+                if (colliders.Length > 0)
+                {
+                    colliders[0].GetComponent<OreVein>().Mine(1);
+                    return;
+                }
+                else
+                {
+                    Debug.Log("No OreVein found.");
+                }
+
+
+            }
+            else if(_isHoldingObject)
+            {
+                Collider[] colliders = Physics.OverlapSphere(transform.position, _detectedRadius, _minecartLayer);
+                if (colliders.Length > 0)
+                {
+                    _objectInHands.GetComponent<OreChunk>().Collect();
+                    ObjectInHands = null;
+                    return;
+                }
+                else
+                {
+                    _objectInHands.GetComponent<OreChunk>().rb.useGravity = true;
+                    ObjectInHands = null;
+                    return;
+                }
+
+
+             
+            }
+           
+
+
+
+
+
+
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        // Display the detection radius in the Unity Editor
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, _detectedRadius);
+    }
 }
+
+
+

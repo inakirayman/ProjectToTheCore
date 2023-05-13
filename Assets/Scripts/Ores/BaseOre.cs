@@ -9,19 +9,18 @@ public class BaseOre : ScriptableObject
 {
     public int HitPoint = 3;
     public Ores OreType = Ores.Coal;
+    public GameObject OreVeinModel;
+    public GameObject OreChunkPrefab;
 
-    public void Hit(float value = 0)
+    public int Hit(int currentHitpoints ,float value = 0)
     {
-        HitPoint -=(int)value;
-        if (HitPoint <= 0)
-            Break();
-
-
-        Debug.Log($"{OreType.ToString()} Ore Hit For {value}");
+        return currentHitpoints -= (int)value;
     }
 
-    public  void Break()
+    public void Break(Vector3 oreChunkSpawnPosition)
     {
+        Instantiate(OreChunkPrefab, oreChunkSpawnPosition, Quaternion.identity);
+
         Debug.Log($"{OreType.ToString()} breaks");
     }
 }
