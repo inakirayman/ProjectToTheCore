@@ -16,3 +16,5 @@ MonoBehaviour:
   OreType: 0
   OreVeinModel: {fileID: 2556243023022772287, guid: fa25374e5d87a4343930e9c9b1d50fc3,
     type: 3}
+  OreChunkPrefab: {fileID: 5294580938699702171, guid: 080545cf0370c6147b83d99cd51d8e27,
+    type: 3}
