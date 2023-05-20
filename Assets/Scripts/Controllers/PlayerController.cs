@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     }
 
     [SerializeField]
-    private float _oreDetectionRadius = 1;
+    private float _interactRadius = 1;
 
     private Vector2 _movementInput;
     private Rigidbody _rb;
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!_isHoldingObject)
             {
-                Collider[] colliders = Physics.OverlapSphere(transform.position, _oreDetectionRadius, _orePickupLayer);
+                Collider[] colliders = Physics.OverlapSphere(transform.position, _interactRadius, _orePickupLayer);
                 if (colliders.Length > 0)
                 {
 
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
                 }
 
 
-                colliders = Physics.OverlapSphere(transform.position, _oreDetectionRadius, _oreLayer);
+                colliders = Physics.OverlapSphere(transform.position, _interactRadius, _oreLayer);
                 if (colliders.Length > 0)
                 {
                     colliders[0].GetComponent<OreVein>().Mine(1);
@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
             }
             else if(_isHoldingObject)
             {
-                Collider[] colliders = Physics.OverlapSphere(transform.position, _oreDetectionRadius, _minecartLayer);
+                Collider[] colliders = Physics.OverlapSphere(transform.position, _interactRadius, _minecartLayer);
                 if (colliders.Length > 0)
                 {
                     _objectInHands.GetComponent<OreChunk>().Collect();
@@ -163,11 +163,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool CanMountUp()
+    {
+        if (_isHoldingObject)
+        {
+            return false;
+        }
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _interactRadius, _minecartLayer);
+        if (colliders.Length > 0)
+        {
+            return true;
+
+              
+        }
+        return false;
+    }
+
+
+
     private void OnDrawGizmosSelected()
     {
         // Display the detection radius in the Unity Editor
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _oreDetectionRadius);
+        Gizmos.DrawWireSphere(transform.position, _interactRadius);
     }
 }
 

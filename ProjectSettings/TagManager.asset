@@ -7,6 +7,7 @@ TagManager:
   - Ore
   - Item
   - Minecart
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Items
   - OrePickup
   - Minecart
-  - 
+  - Bullet
   - 
   - 
   - 

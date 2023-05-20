@@ -6,7 +6,7 @@
             "id": "924fe994-d258-4f10-bd81-5098b195ffe6",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "Move/Aim",
                     "type": "Value",
                     "id": "56fd1263-bbb6-4396-94c0-98602e1236be",
                     "expectedControlType": "Vector2",
@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Mine",
+                    "name": "Interact / Shoot",
                     "type": "Button",
                     "id": "00ab19fb-5e69-40c3-9b3b-eb5ed2005072",
                     "expectedControlType": "Button",
@@ -24,16 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pickup",
-                    "type": "Button",
-                    "id": "6c709e22-aa88-476f-8a8c-7c276cfe0787",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Mount",
+                    "name": "Mount / Dismount",
                     "type": "Button",
                     "id": "fd0b5e60-2bc3-4155-95f3-5e52a9b73ded",
                     "expectedControlType": "Button",
@@ -59,7 +50,7 @@
                     "interactions": "",
                     "processors": "StickDeadzone",
                     "groups": "Gamepad",
-                    "action": "Move",
+                    "action": "Move/Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -70,7 +61,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Mine",
+                    "action": "Interact / Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -81,18 +72,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Mount",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "60eb5ec6-5440-4212-9d64-37d00db1976f",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Pickup",
+                    "action": "Mount / Dismount",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
