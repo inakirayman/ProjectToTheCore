@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
     private void FixedUpdate()
     {
         // Calculate the desired position of the camera
-        Vector3 desiredPosition = Target.position + _offset;
+        Vector3 desiredPosition = Target.position; //+ _offset;
 
         // Interpolate between the current camera position and the desired position
         Vector3 newPosition = Vector3.Lerp(transform.position, desiredPosition, Speed * Time.deltaTime);
