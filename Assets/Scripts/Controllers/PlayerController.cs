@@ -35,13 +35,13 @@ public class PlayerController : MonoBehaviour
     }
 
     [SerializeField]
-    private float _detectedRadius = 1;
+    private float _oreDetectionRadius = 1;
 
     private Vector2 _movementInput;
     private Rigidbody _rb;
 
 
-    private bool _isHoldingObject =false;
+    private bool _isHoldingObject = false;
 
     
     void Start()
@@ -63,8 +63,8 @@ public class PlayerController : MonoBehaviour
     {
         if (_isHoldingObject)
         {
-            _objectInHands.GetComponent<OreChunk>().rb.useGravity = false;
-            _objectInHands.GetComponent<OreChunk>().rb.MovePosition(_hands.position);
+            _objectInHands.GetComponent<OreChunk>().Rb.useGravity = false;
+            _objectInHands.GetComponent<OreChunk>().Rb.MovePosition(_hands.position);
         }
 
 
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!_isHoldingObject)
             {
-                Collider[] colliders = Physics.OverlapSphere(transform.position, _detectedRadius, _orePickupLayer);
+                Collider[] colliders = Physics.OverlapSphere(transform.position, _oreDetectionRadius, _orePickupLayer);
                 if (colliders.Length > 0)
                 {
 
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
                 }
 
 
-                colliders = Physics.OverlapSphere(transform.position, _detectedRadius, _oreLayer);
+                colliders = Physics.OverlapSphere(transform.position, _oreDetectionRadius, _oreLayer);
                 if (colliders.Length > 0)
                 {
                     colliders[0].GetComponent<OreVein>().Mine(1);
@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
             }
             else if(_isHoldingObject)
             {
-                Collider[] colliders = Physics.OverlapSphere(transform.position, _detectedRadius, _minecartLayer);
+                Collider[] colliders = Physics.OverlapSphere(transform.position, _oreDetectionRadius, _minecartLayer);
                 if (colliders.Length > 0)
                 {
                     _objectInHands.GetComponent<OreChunk>().Collect();
@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    _objectInHands.GetComponent<OreChunk>().rb.useGravity = true;
+                    _objectInHands.GetComponent<OreChunk>().Rb.useGravity = true;
                     ObjectInHands = null;
                     return;
                 }
@@ -167,7 +167,7 @@ public class PlayerController : MonoBehaviour
     {
         // Display the detection radius in the Unity Editor
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _detectedRadius);
+        Gizmos.DrawWireSphere(transform.position, _oreDetectionRadius);
     }
 }
 

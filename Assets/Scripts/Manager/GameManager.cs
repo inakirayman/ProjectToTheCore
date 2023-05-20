@@ -5,8 +5,19 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    private Dictionary<BaseOre, int> _collectedOres;
 
-    private Dictionary<BaseOre, int> collectedOres;
+
+
+
+    //Settings
+    [SerializeField]
+    private float _fuelValue = 10;
+
+
+
+
+
 
     private void Awake()
     {
@@ -19,8 +30,19 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        collectedOres = new Dictionary<BaseOre, int>();
+        _collectedOres = new Dictionary<BaseOre, int>();
+
+
     }
+
+
+
+
+    
+
+
+
+
 
     public void AddCollectedOre(BaseOre ore)
     {
@@ -31,26 +53,31 @@ public class GameManager : MonoBehaviour
         }
 
 
-        if (collectedOres.ContainsKey(ore))
+        if (_collectedOres.ContainsKey(ore))
         {
-            collectedOres[ore]++;
+            _collectedOres[ore]++;
         }
         else
         {
-            collectedOres.Add(ore, 1);
+            _collectedOres.Add(ore, 1);
         }
     }
 
     private void IncreaseFuel()
     {
+
+        UIManager.Instance.FuelBar.Current += _fuelValue;
+
+
+
         Debug.Log("Fuel added");
     }
 
     public int GetCollectedOreCount(BaseOre ore)
     {
-        if (collectedOres.ContainsKey(ore))
+        if (_collectedOres.ContainsKey(ore))
         {
-            return collectedOres[ore];
+            return _collectedOres[ore];
         }
         else
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class OreChunk : MonoBehaviour
 {
     public BaseOre Ore;
-    public Rigidbody rb;
+    public Rigidbody Rb;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +14,7 @@ public class OreChunk : MonoBehaviour
             Debug.Log("Ore is not set");
         }
 
-        rb = GetComponent<Rigidbody>();
+        Rb = GetComponent<Rigidbody>();
     }
 
     public void Collect()

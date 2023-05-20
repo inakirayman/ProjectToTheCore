@@ -4,10 +4,28 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance { get; private set; }
+
+
+
     public ProgressBar FuelBar;
     public ProgressBar HealthBar;
     public ProgressBar LightBar;
-    
+
+
+  
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+    }
     public void SetFuelBarStartStats(float max, float current)
     {
         FuelBar.Maximum = max;
