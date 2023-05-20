@@ -985,8 +985,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FuelBar: {fileID: 3432159761047448610}
-  HealthBar: {fileID: 0}
-  LightBar: {fileID: 0}
+  HealthBar: {fileID: 3432159760084114765}
+  LightBar: {fileID: 3432159761884077097}
 --- !u!1 &3432159761827298475
 GameObject:
   m_ObjectHideFlags: 0
