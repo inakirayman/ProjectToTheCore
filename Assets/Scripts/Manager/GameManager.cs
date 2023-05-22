@@ -14,8 +14,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float _fuelValue = 10;
 
-
-
+    [Range(0f, 100f)]
+    public float LightEnergy = 100f;
+    [Range(0f, 10f)]
+    public float MinecartHealth = 10f;
 
 
 
@@ -34,13 +36,6 @@ public class GameManager : MonoBehaviour
 
 
     }
-
-
-
-
-    
-
-
 
 
 
