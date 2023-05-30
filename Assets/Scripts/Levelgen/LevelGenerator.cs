@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
@@ -11,19 +12,24 @@ public class LevelGenerator : MonoBehaviour
     public int numberOfPrefabs = 10;  // Number of regular prefabs to generate
 
     private GameObject previousPrefab; // Previous prefab
-    
+    private List<Transform> _transformsList; // List to store transforms in order
 
     private void Start()
     {
         GenerateLevel();
+
+        GameManager.Instance.MinecartWaypoints = _transformsList;
     }
 
     private void GenerateLevel()
     {
+        _transformsList = new List<Transform>();
+
         // Generate the start of the level
         GameObject startObj = Instantiate(startPrefab, transform.position, Quaternion.identity);
         previousPrefab = startObj;
         startObj.transform.parent = transform;
+        AddTransformsToList(startObj);
 
         // Initialize the initial direction to go straight
         int direction = 0; // 0 for straight, 1 for right, -1 for left
@@ -39,11 +45,11 @@ public class LevelGenerator : MonoBehaviour
         {
             GameObject prefab;
 
-            if (direction == 0 || Random.value < straightProbability ||  Isright && direction == 1 || IsLeft && direction == -1)
+            if (direction == 0 || Random.value < straightProbability || Isright && direction == 1 || IsLeft && direction == -1)
             {
                 // Go straight
                 prefab = Instantiate(straightPrefabs[Random.Range(0, straightPrefabs.Length)], Vector3.zero, Quaternion.identity);
-                direction = Random.Range(-1, 2); 
+                direction = Random.Range(-1, 2);
             }
             else if (direction == 1)
             {
@@ -65,6 +71,7 @@ public class LevelGenerator : MonoBehaviour
 
             AlignEntranceToExit(prefab, previousPrefab);
             prefab.transform.parent = transform;
+            AddTransformsToList(prefab);
 
             previousPrefab = prefab;
         }
@@ -73,12 +80,17 @@ public class LevelGenerator : MonoBehaviour
         GameObject endObj = Instantiate(endPrefab, Vector3.zero, Quaternion.identity);
         AlignEntranceToExit(endObj, previousPrefab);
         endObj.transform.parent = transform;
+        AddTransformsToList(endObj);
 
+        // Print the transforms in order
+        foreach (Transform t in _transformsList)
+        {
+            Debug.Log(t.name);
+        }
     }
 
     private void AlignEntranceToExit(GameObject prefab, GameObject previousPrefab)
     {
-
         prefab.transform.rotation = previousPrefab.transform.Find("ExitPoint").transform.rotation;
 
         Transform entrance = prefab.transform.Find("EntrancePoint");
@@ -87,10 +99,46 @@ public class LevelGenerator : MonoBehaviour
         Vector3 entranceOffset = entrance.position - prefab.transform.position;
         Vector3 exitOffset = previousExit.position - previousPrefab.transform.position;
 
-        
-
         prefab.transform.position = previousExit.position - entranceOffset;
     }
 
-   
+    private void AddTransformsToList(GameObject prefab)
+    {
+        Transform entrance = prefab.transform.Find("EntrancePoint");
+        Transform middle = prefab.transform.Find("MiddlePoint");
+        Transform exit = prefab.transform.Find("ExitPoint");
+
+        if (entrance != null)
+        {
+            _transformsList.Add(entrance);
+        }
+
+        if (middle != null)
+        {
+            _transformsList.Add(middle);
+        }
+
+        if (exit != null)
+        {
+            _transformsList.Add(exit);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (_transformsList != null)
+        {
+            Gizmos.color = Color.yellow;
+            for (int i = 0; i < _transformsList.Count - 1; i++)
+            {
+                Transform currentTransform = _transformsList[i];
+                Transform nextTransform = _transformsList[i + 1];
+                Gizmos.DrawLine(currentTransform.position, nextTransform.position);
+            }
+        }
+    }
+
+
+
+
 }

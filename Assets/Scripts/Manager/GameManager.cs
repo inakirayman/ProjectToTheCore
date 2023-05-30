@@ -13,13 +13,12 @@ public class GameManager : MonoBehaviour
     //Settings
     [SerializeField]
     private float _fuelValue = 10;
-
     [Range(0f, 100f)]
     public float LightEnergy = 100f;
     [Range(0f, 10f)]
     public float MinecartHealth = 10f;
 
-
+    public List<Transform> MinecartWaypoints;
 
     private void Awake()
     {
