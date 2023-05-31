@@ -95,12 +95,30 @@ public class GameManager : MonoBehaviour
 
         }
 
-
-
-
-
-
         LightLogic();
+    }
+
+    private void OreUpdateUI()
+    {
+
+        if (_collectedOres.ContainsKey(OreType.Coal))
+        {
+            int value = _collectedOres[OreType.Coal];
+            UIManager.Instance.CoalOreAmount.text = value.ToString();
+        }
+
+        if (_collectedOres.ContainsKey(OreType.Iron))
+        {
+            int value = _collectedOres[OreType.Iron];
+            UIManager.Instance.IronOreAmount.text = value.ToString();
+        }
+
+        if (_collectedOres.ContainsKey(OreType.Gold))
+        {
+            int value = _collectedOres[OreType.Iron];
+            UIManager.Instance.GoldOreAmount.text = value.ToString();
+        }
+
     }
 
     private void LightLogic()
@@ -159,6 +177,8 @@ public class GameManager : MonoBehaviour
         {
             _collectedOres.Add(ore, 1);
         }
+
+        OreUpdateUI();
     }
     public void RemoveCollectedOre(OreType ore, int amount = 1)
     {
@@ -174,6 +194,8 @@ public class GameManager : MonoBehaviour
                 _collectedOres.Remove(ore);
             }
         }
+
+        OreUpdateUI();
     }
     public int GetCollectedOreCount(OreType ore)
     {
