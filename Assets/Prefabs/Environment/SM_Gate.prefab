@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3655839488540511315}
   - component: {fileID: 3655839488540511313}
   - component: {fileID: 3655839488540511314}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ Light:
   m_Color: {r: 0.9811321, g: 0.8757518, b: 0.67013174, a: 1}
   m_Intensity: 21.93
   m_Range: 11.8
-  m_SpotAngle: 117.18171
+  m_SpotAngle: 179
   m_InnerSpotAngle: 49.90129
   m_CookieSize: 10
   m_Shadows:
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 3655839488692206945}
   - component: {fileID: 3655839488692206959}
   - component: {fileID: 3655839488692206944}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Spot Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ Light:
   m_Color: {r: 0.9811321, g: 0.8757518, b: 0.67013174, a: 1}
   m_Intensity: 21.93
   m_Range: 11.8
-  m_SpotAngle: 117.18171
+  m_SpotAngle: 179
   m_InnerSpotAngle: 49.90129
   m_CookieSize: 10
   m_Shadows:
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 187255958682180050}
   - component: {fileID: 2701512183556304152}
   - component: {fileID: 3655839489170993561}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SM_Gate
   m_TagString: Untagged
   m_Icon: {fileID: 0}

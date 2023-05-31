@@ -29,13 +29,19 @@ public class LevelGenerator : MonoBehaviour
         GameObject startObj = Instantiate(startPrefab, transform.position, Quaternion.identity);
         previousPrefab = startObj;
         startObj.transform.parent = transform;
+
+        Transform entrance = startObj.transform.Find("EntrancePoint");
+        if (entrance != null)
+        {
+            _transformsList.Add(entrance);
+        }
         AddTransformsToList(startObj);
 
         // Initialize the initial direction to go straight
         int direction = 0; // 0 for straight, 1 for right, -1 for left
 
         // Probability factor for going straight
-        float straightProbability = 0.7f; // Adjust this value to increase or decrease the likelihood of going straight
+        float straightProbability = 0.5f; // Adjust this value to increase or decrease the likelihood of going straight
 
         bool Isright = false;
         bool IsLeft = false;
@@ -82,11 +88,6 @@ public class LevelGenerator : MonoBehaviour
         endObj.transform.parent = transform;
         AddTransformsToList(endObj);
 
-        // Print the transforms in order
-        foreach (Transform t in _transformsList)
-        {
-            Debug.Log(t.name);
-        }
     }
 
     private void AlignEntranceToExit(GameObject prefab, GameObject previousPrefab)
@@ -104,14 +105,11 @@ public class LevelGenerator : MonoBehaviour
 
     private void AddTransformsToList(GameObject prefab)
     {
-        Transform entrance = prefab.transform.Find("EntrancePoint");
+       
         Transform middle = prefab.transform.Find("MiddlePoint");
         Transform exit = prefab.transform.Find("ExitPoint");
 
-        if (entrance != null)
-        {
-            _transformsList.Add(entrance);
-        }
+       
 
         if (middle != null)
         {

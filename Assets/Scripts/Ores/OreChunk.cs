@@ -19,7 +19,7 @@ public class OreChunk : MonoBehaviour
 
     public void Collect()
     {
-        GameManager.Instance.AddCollectedOre(Ore);
+        GameManager.Instance.AddCollectedOre(Ore.OreType);
         Destroy(gameObject);
     }
 }

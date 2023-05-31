@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    private Dictionary<BaseOre, int> _collectedOres;
+    private Dictionary<OreType, int> _collectedOres;
 
 
 
@@ -13,6 +13,19 @@ public class GameManager : MonoBehaviour
     //Settings
     [SerializeField]
     private float _fuelValue = 10;
+
+    [SerializeField,Range(0f,100f)]
+    private float _minecartFuel;
+    public float MinecartFuel
+    {
+        get { return _minecartFuel; }
+        set
+        {
+            _minecartFuel = Mathf.Max(0, value); // Ensure the fuel value doesn't go below zero
+            UIManager.Instance.FuelBar.Current = _minecartFuel; // Update the UI element
+        }
+    }
+
     [Range(0f, 100f)]
     public float LightEnergy = 100f;
     [Range(0f, 10f)]
@@ -31,21 +44,38 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        _collectedOres = new Dictionary<BaseOre, int>();
+        _collectedOres = new Dictionary<OreType, int>();
 
 
     }
 
 
-
-    public void AddCollectedOre(BaseOre ore)
+    private void Update()
     {
-        if (ore.OreType == Ores.Coal)
+        //Check if there is place to add fuel.
+        if (_collectedOres.ContainsKey(OreType.Coal) && MinecartFuel + _fuelValue <= 100 && _collectedOres[OreType.Coal] >= 1)
         {
-            IncreaseFuel();
-            return;
+            RemoveCollectedOre(OreType.Coal);
+            MinecartFuel += _fuelValue;
+
         }
 
+
+
+
+
+
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        
+    }
+
+    public void AddCollectedOre(OreType ore)
+    {
+        
 
         if (_collectedOres.ContainsKey(ore))
         {
@@ -57,18 +87,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void IncreaseFuel()
+    public void RemoveCollectedOre(OreType ore, int amount = 1)
     {
 
-        UIManager.Instance.FuelBar.Current += _fuelValue;
-
-
-
-        Debug.Log("Fuel added");
+        if (_collectedOres.ContainsKey(ore))
+        {
+            if (_collectedOres[ore] > 1)
+            {
+                _collectedOres[ore]--;
+            }
+            else
+            {
+                _collectedOres.Remove(ore);
+            }
+        }
     }
 
-    public int GetCollectedOreCount(BaseOre ore)
+
+    public int GetCollectedOreCount(OreType ore)
     {
+
         if (_collectedOres.ContainsKey(ore))
         {
             return _collectedOres[ore];

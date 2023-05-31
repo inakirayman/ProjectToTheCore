@@ -8,7 +8,7 @@ using UnityEngine;
 public class BaseOre : ScriptableObject
 {
     public int HitPoint = 3;
-    public Ores OreType = Ores.Coal;
+    public OreType OreType = OreType.Coal;
     public GameObject OreVeinModel;
     public GameObject OreChunkPrefab;
 

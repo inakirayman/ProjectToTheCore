@@ -21,7 +21,7 @@ public class MountHelper : MonoBehaviour
             {
 
 
-
+                _playerController.GetComponent<Rigidbody>().useGravity = false;
                 _playerController.enabled = false;
                 _turretController.enabled = true;
                 _turretController.MountUp();
@@ -33,6 +33,7 @@ public class MountHelper : MonoBehaviour
                 _turretController.Dismount();
                 _turretController.enabled = false;
                 _playerController.enabled = true;
+                _playerController.GetComponent<Rigidbody>().useGravity = true;
 
             }
         }

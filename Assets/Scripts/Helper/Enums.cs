@@ -10,7 +10,7 @@ public class Enums
 
     
 }
-public enum Ores
+public enum OreType
 {
         Coal,
         Iron,

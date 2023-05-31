@@ -42,7 +42,7 @@ public class TurretController : MonoBehaviour
     void Update()
     {
         RotateTurret();
-
+        _player.transform.rotation = _turret.rotation;
         ShootLogic();
     }
 
@@ -80,7 +80,7 @@ public class TurretController : MonoBehaviour
 
     public void MountUp()
     {
-        _player.transform.position = _turret.position;
+        _player.transform.position = _turret.position - new Vector3(0,0.5f,0);
         _player.transform.rotation = _turret.rotation;
         _player.transform.parent = _turret;
 
