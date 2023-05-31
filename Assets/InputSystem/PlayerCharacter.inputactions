@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Start / Stop Moving",
+                    "type": "Button",
+                    "id": "fbddcb67-581f-4213-ba1e-ca8bf8e884a1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -84,6 +93,17 @@
                     "processors": "StickDeadzone",
                     "groups": "",
                     "action": "Move Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "245eaa5f-1d28-471f-a613-deb99f25f0da",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Start / Stop Moving",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

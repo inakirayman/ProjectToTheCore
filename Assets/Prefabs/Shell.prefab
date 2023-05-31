@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1712242612784107042}
   - component: {fileID: 3470002468796529384}
   - component: {fileID: 1396242213806116709}
+  - component: {fileID: 5526842955454030738}
   - component: {fileID: 9091544830008482717}
   m_Layer: 10
   m_Name: Shell
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: c038df646734438489903096528bc236, type: 3}
+  - {fileID: 2100000, guid: 4f38f15f22b0adf4abbb63830dce316c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,6 +99,22 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.05
   m_Center: {x: 0, y: 0, z: 0.03}
+--- !u!54 &5526842955454030738
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3109472400739654461}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!114 &9091544830008482717
 MonoBehaviour:
   m_ObjectHideFlags: 0

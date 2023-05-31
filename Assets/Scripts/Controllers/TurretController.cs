@@ -11,6 +11,9 @@ public class TurretController : MonoBehaviour
     private Transform _exitPoint;
     [SerializeField]
     private GameObject _bulletPrefab;
+    [SerializeField]
+    private AudioSource _turretAudio;
+
 
     [SerializeField]
     private Transform _turret;
@@ -53,10 +56,18 @@ public class TurretController : MonoBehaviour
 
         if (_timeSinceLastShot >= 1 / FireRate && _isShooting)
         {
-            Destroy(Instantiate(_bulletPrefab, _barrel.position, _turret.rotation), 4);
+            Destroy(Instantiate(_bulletPrefab, _barrel.position, _turret.rotation), 2);
 
+            AudioLogic();
             _timeSinceLastShot = 0;
         }
+    }
+
+    private void AudioLogic()
+    {
+        _turretAudio.pitch = Random.Range(0.8f, 1.2f);
+        _turretAudio.volume = Random.Range(0.7f, 1f);
+        _turretAudio.Play();
     }
 
     private void RotateTurret()

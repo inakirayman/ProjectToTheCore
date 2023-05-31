@@ -5,6 +5,10 @@ using UnityEngine;
 public class Minecart : MonoBehaviour
 {
 
+
+  
+
+
     #region Light Stats
     [Header("Light Stats")]
     public Light AreaLight;
@@ -18,17 +22,19 @@ public class Minecart : MonoBehaviour
     [Header("Minecart Stats")]
     public float BaseMoveSpeed;
     private float _moveSpeed;
-    private float _rotationSpeed =4; 
+    private float _rotationSpeed =4;
+    #endregion
 
 
-
-
+    #region Waypoints
+    private int _currentWaypointIndex;
+    private List<Transform> _waypoints;
     #endregion
 
 
 
-    private int _currentWaypointIndex;
-    private List<Transform> _waypoints;
+
+
 
     private void Start()
     {
@@ -73,7 +79,7 @@ public class Minecart : MonoBehaviour
     private void FixedUpdate()
     {
         //Check if ther minecart has fuel.
-        if(GameManager.Instance.MinecartFuel > 0)
+        if(GameManager.Instance.MinecartFuel > 0 && GameManager.Instance.IsMinecartDriving)
         {
             if (_currentWaypointIndex < _waypoints.Count)
             {
@@ -83,9 +89,9 @@ public class Minecart : MonoBehaviour
                 GameManager.Instance.MinecartFuel -= _moveSpeed * Time.deltaTime;
 
             }
-
-
         }
+
+
        
     }
 
