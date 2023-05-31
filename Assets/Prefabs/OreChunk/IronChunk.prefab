@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &1098008709053276180
+--- !u!1001 &8384927827888224621
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,11 +11,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 199746677c6e34b41a550a023219447a, type: 2}
+      objectReference: {fileID: 2100000, guid: 5ebba370cc9b78d4eabb86b6e5560984, type: 2}
     - target: {fileID: 5063955101154549647, guid: e9f98a90c5db38146a03b8f5f7df8b40,
         type: 3}
       propertyPath: m_Name
-      value: CoalChunk
+      value: IronChunk
       objectReference: {fileID: 0}
     - target: {fileID: 8245036072424569497, guid: e9f98a90c5db38146a03b8f5f7df8b40,
         type: 3}

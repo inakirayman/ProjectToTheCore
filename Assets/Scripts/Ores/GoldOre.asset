@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a5c5a6483b74349970753fef9aecf1, type: 3}
+  m_Name: GoldOre
+  m_EditorClassIdentifier: 
+  HitPoint: 3
+  OreType: 3
+  OreVeinModel: {fileID: 7173627869535531758, guid: b47c66932c64b824182f15eeae197c8f,
+    type: 3}
+  OreChunkPrefab: {fileID: 2303298339189120889, guid: c8fbe8e7f25119140a70f9f2f213a423,
+    type: 3}
