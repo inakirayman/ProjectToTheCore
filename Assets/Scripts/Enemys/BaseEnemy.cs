@@ -84,7 +84,7 @@ public  class BaseEnemy : MonoBehaviour
 
     protected void Die()
     {
-        // Destroy the enemy or perform any other actions required for death
-        Destroy(gameObject);
+        Animator.SetBool("Die", true);
+        Destroy(gameObject,2);
     }
 }

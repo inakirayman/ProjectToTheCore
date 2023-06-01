@@ -26,7 +26,7 @@ public class Exploder : BaseEnemy
         }
         else
         {
-            Die();
+            Destroy(gameObject);
         }
     }
 
@@ -49,7 +49,7 @@ public class Exploder : BaseEnemy
             if (minecart != null)
             {
                 minecart.Hit(_explosionDamage);
-                
+                break;
             }
         }
         Instantiate(_explosionEffect, transform.position, transform.rotation);
@@ -59,7 +59,7 @@ public class Exploder : BaseEnemy
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Minecart"))
         {
             if (!_explosionDelayStarted)
             {

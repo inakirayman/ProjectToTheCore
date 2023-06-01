@@ -17,6 +17,13 @@ public class BulletMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            collision.gameObject.GetComponent<BaseEnemy>().Hit(1);
+        }
+
+
+
         Destroy(gameObject);
     }
 }

@@ -55,8 +55,21 @@ public class GameManager : MonoBehaviour
     private float _energyDecreaseRate = 100f / 45f;
     private bool _isRecharging = false;
 
-    [Range(0f, 10f)]
-    public float MinecartHealth = 10f;
+    [SerializeField, Range(0f, 10f)]
+    private float _minecartHealth = 10f;
+    public float MinecartHealth
+    {
+        get
+        {
+            return _minecartHealth;
+        }
+        set
+        {
+            _minecartHealth = Mathf.Max(0, value);
+            UIManager.Instance.HealthBar.Current = _minecartHealth;
+        } 
+        
+    }
 
     public List<Transform> MinecartWaypoints;
     public bool IsMinecartDriving = false;
@@ -80,8 +93,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        MinecartHealth = _minecartHealth;
         MinecartFuel = _minecartFuel;
         LightEnergy = _lightEnergy;
+
     }
 
 
