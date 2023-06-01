@@ -115,10 +115,7 @@ public class PlayerController : MonoBehaviour
                     ObjectInHands = colliders[0].transform.parent.gameObject;
                     return;
                 }
-                else
-                {
-                    Debug.Log("No item found.");
-                }
+               
 
 
                 colliders = Physics.OverlapSphere(transform.position, _interactRadius, _oreLayer);
@@ -127,10 +124,7 @@ public class PlayerController : MonoBehaviour
                     colliders[0].GetComponent<OreVein>().Mine(1);
                     return;
                 }
-                else
-                {
-                    Debug.Log("No OreVein found.");
-                }
+                
 
 
             }

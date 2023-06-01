@@ -64,8 +64,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5129608522860172990, guid: 33fec63e212482346aaf5b9d7fde623e,
         type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000,
+        type: 0}
+    - target: {fileID: 5129608522860172990, guid: 33fec63e212482346aaf5b9d7fde623e,
+        type: 3}
       propertyPath: m_Name
-      value: OreVeinObject
+      value: CoalOreVein
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33fec63e212482346aaf5b9d7fde623e, type: 3}

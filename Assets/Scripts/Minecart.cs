@@ -97,7 +97,7 @@ public class Minecart : MonoBehaviour
 
 
 
-    public void MinecartHit(float value = 1)
+    public void Hit(float value = 1)
     {
         GameManager.Instance.MinecartHealth -= value;
     }

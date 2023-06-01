@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
 
     [SerializeField]
-    private float _fuelValue = 10;
+    private float _fuelValue = 15;
 
     [SerializeField,Range(0f,100f)]
     private float _minecartFuel;
@@ -100,11 +100,15 @@ public class GameManager : MonoBehaviour
 
     private void OreUpdateUI()
     {
-
+        
         if (_collectedOres.ContainsKey(OreType.Coal))
         {
             int value = _collectedOres[OreType.Coal];
             UIManager.Instance.CoalOreAmount.text = value.ToString();
+        }
+        else
+        {
+            UIManager.Instance.CoalOreAmount.text = "0";
         }
 
         if (_collectedOres.ContainsKey(OreType.Iron))
@@ -112,11 +116,19 @@ public class GameManager : MonoBehaviour
             int value = _collectedOres[OreType.Iron];
             UIManager.Instance.IronOreAmount.text = value.ToString();
         }
+        else
+        {
+            UIManager.Instance.IronOreAmount.text = "0";
+        }
 
         if (_collectedOres.ContainsKey(OreType.Gold))
         {
-            int value = _collectedOres[OreType.Iron];
+            int value = _collectedOres[OreType.Gold];
             UIManager.Instance.GoldOreAmount.text = value.ToString();
+        }
+        else
+        {
+            UIManager.Instance.GoldOreAmount.text = "0";
         }
 
     }

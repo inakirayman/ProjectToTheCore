@@ -21,6 +21,6 @@ public class BaseOre : ScriptableObject
     {
         Instantiate(OreChunkPrefab, oreChunkSpawnPosition, Quaternion.identity);
 
-        Debug.Log($"{OreType.ToString()} breaks");
+        
     }
 }
