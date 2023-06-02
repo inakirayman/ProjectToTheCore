@@ -73,7 +73,15 @@ public class GameManager : MonoBehaviour
 
     public List<Transform> MinecartWaypoints;
     public bool IsMinecartDriving = false;
+    public GameObject Minecart;
 
+    public EnemySpawner EnemySpawner;
+    public float SpawnDelay = 6;
+    private float _spawnTimer =0;
+    public Vector2 EnemySpawnAmountRange = new Vector2(2, 5);
+
+
+    private AudioSource _audioSource;
     private void Awake()
     {
         if (Instance == null)
@@ -86,7 +94,7 @@ public class GameManager : MonoBehaviour
         }
 
         _collectedOres = new Dictionary<OreType, int>();
-
+        _audioSource = GetComponent<AudioSource>();
 
     }
 
@@ -110,8 +118,16 @@ public class GameManager : MonoBehaviour
 
         }
 
+        if (_isRecharging)
+        {
+            SpawnEnemys();
+        }
+       
+       
         LightLogic();
     }
+
+
 
     private void OreUpdateUI()
     {
@@ -177,6 +193,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                _audioSource.Play();
                 IsMinecartDriving = false;
                 _isRecharging = true;
             }
@@ -186,7 +203,27 @@ public class GameManager : MonoBehaviour
 
     }
 
-    
+    private void SpawnEnemys()
+    {
+        // Increment the spawn timer
+        _spawnTimer += Time.deltaTime;
+
+        // Check if it's time to spawn enemies
+        if (_spawnTimer >= SpawnDelay)
+        {
+            // Reset the spawn timer
+            _spawnTimer = 0f;
+
+            // Determine the number of enemies to spawn within the specified range
+            int numberOfEnemies = UnityEngine.Random.Range((int)EnemySpawnAmountRange.x, (int)EnemySpawnAmountRange.y + 1);
+
+            // Call the SpawnEnemiesInRandomArea method from the EnemySpawner
+            for (int i = 0; i < numberOfEnemies; i++)
+            {
+                EnemySpawner.SpawnEnemiesInRandomArea();
+            }
+        }
+    }
 
 
 

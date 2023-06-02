@@ -16,7 +16,15 @@ public class Exploder : BaseEnemy
     private bool _hasExploded;
     private bool _explosionDelayStarted;
 
-    
+
+  
+    private void Awake()
+    {
+        Target = GameManager.Instance.Minecart.transform;
+
+        
+    }
+
 
     private void Update()
     {
@@ -33,6 +41,7 @@ public class Exploder : BaseEnemy
     private IEnumerator StartExplosionDelay()
     {
         yield return new WaitForSeconds(_explosionDelay);
+        if(IsAlive)
         Explode();
 
     }

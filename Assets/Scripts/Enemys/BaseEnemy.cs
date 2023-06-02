@@ -7,10 +7,13 @@ public  class BaseEnemy : MonoBehaviour
     [SerializeField]
     private float _health;
     [SerializeField]
+    private Vector2 _moveSpeedRange = new Vector2(3, 4);
     private float _moveSpeed;
     [SerializeField]
     private float _minDistanceThreshold;
-
+    [SerializeField]
+    private GameObject _hitBox;
+    public bool IsAlive = true;
 
     public Transform Target;
     private Vector3 _desiredPosition;
@@ -18,11 +21,15 @@ public  class BaseEnemy : MonoBehaviour
     [SerializeField]
     public Animator Animator;
     private bool _isAllowedToMove = true;
+    private AudioSource _audioSource;
+
 
     // Start is called before the first frame update
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _audioSource = GetComponent<AudioSource>();
+        _moveSpeed = Random.Range(_moveSpeedRange.x, _moveSpeedRange.y);
     }
 
     // Update is called once per frame
@@ -84,7 +91,12 @@ public  class BaseEnemy : MonoBehaviour
 
     protected void Die()
     {
+        _rb.useGravity = false;
+        _hitBox.gameObject.SetActive(false);
+        IsAlive = false;
+        _isAllowedToMove = false;
         Animator.SetBool("Die", true);
+        _audioSource.Play();
         Destroy(gameObject,2);
     }
 }

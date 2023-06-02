@@ -14,7 +14,7 @@ public class LevelGenerator : MonoBehaviour
     private GameObject previousPrefab; // Previous prefab
     private List<Transform> _transformsList; // List to store transforms in order
 
-    private void Start()
+    private void Awake()
     {
         GenerateLevel();
 

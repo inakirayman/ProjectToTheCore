@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
 {
     public Transform Target;
     public float Speed = 5f;
-    public float rotateSpeed = 10f;
+    public float RotateSpeed = 10f;
 
     private Vector3 _offset;
     private float _horizontalInput;
@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
         transform.position = newPosition;
 
 
-        transform.Rotate(Vector3.up, _horizontalInput * rotateSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.up, _horizontalInput * RotateSpeed * Time.deltaTime);
     }
 
     public void Rotate(InputAction.CallbackContext context)
