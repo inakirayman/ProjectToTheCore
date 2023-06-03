@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
@@ -16,12 +17,49 @@ public class GameManager : MonoBehaviour
 
     //Settings
     public bool HasGameStarted = false;
-    
 
 
+    #region UI Settings
+    [SerializeField]
+    private EventSystem _eventSystem;
+
+    #region GameOver
+    [SerializeField]
+    private GameObject _gameOverScreen;
+
+
+    #endregion
+
+    #region Win
+    [SerializeField]
+    private GameObject _winScreen;
+    public bool LevelFinished = false;
+    #endregion
+
+    #region Gate
+    [SerializeField]
+    private GameObject _gateProgressBarObject;
+    private ProgressBar _gateProgressBar;
+    private float _gateProgress = 0;
+    private float _gateIncreaseRate = 100f / 60f;
+    public bool IsGateCharging = false; 
+    public float GateProgress
+    {
+        get
+        {
+            return _gateProgress;
+        }
+        set
+        {
+            _gateProgress = value;
+            _gateProgressBar.Current = _gateProgress;
+        }
+    }
+    #endregion 
+
+    #region Fuel
     [SerializeField]
     private float _fuelValue = 15;
-
     [SerializeField,Range(0f,100f)]
     private float _minecartFuel;
     public float MinecartFuel
@@ -36,7 +74,9 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.FuelBar.Current = _minecartFuel; // Update the UI element
         }
     }
+    #endregion
 
+    #region Light
     [SerializeField, Range(0f, 100f)]
     private float _lightEnergy;
     public float LightEnergy
@@ -53,8 +93,10 @@ public class GameManager : MonoBehaviour
     }
     private float _energyIncreaseRate = 100f / 30f;
     private float _energyDecreaseRate = 100f / 45f;
-    private bool _isRecharging = false;
+    private bool _isLightRecharging = false;
+    #endregion
 
+    #region Health
     [SerializeField, Range(0f, 10f)]
     private float _minecartHealth = 10f;
     public float MinecartHealth
@@ -70,6 +112,9 @@ public class GameManager : MonoBehaviour
         } 
         
     }
+    #endregion
+
+    #endregion
 
     public List<Transform> MinecartWaypoints;
     public bool IsMinecartDriving = false;
@@ -95,6 +140,9 @@ public class GameManager : MonoBehaviour
 
         _collectedOres = new Dictionary<OreType, int>();
         _audioSource = GetComponent<AudioSource>();
+        _gateProgressBar = _gateProgressBarObject.GetComponent<ProgressBar>();
+
+
 
     }
 
@@ -110,6 +158,16 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+
+        if(MinecartHealth <= 0)
+        {
+            _gameOverScreen.SetActive(true);
+            _eventSystem.SetSelectedGameObject(_gameOverScreen.transform.Find("Menu").Find("Restart Button").gameObject);
+            Time.timeScale = 0f;
+        }
+
+
+
         //Check if there is place to add fuel.
         if (_collectedOres.ContainsKey(OreType.Coal) && MinecartFuel + _fuelValue <= 100 && _collectedOres[OreType.Coal] >= 1)
         {
@@ -118,16 +176,54 @@ public class GameManager : MonoBehaviour
 
         }
 
-        if (_isRecharging)
+        if (_isLightRecharging)
         {
             SpawnEnemys();
         }
+    
+
+        if (!IsGateCharging)
+        {
+            LightLogic();
+        }
+        else
+        {
+            GateLogic();
+        }
+
+
        
+    }
+
+    private void GateLogic()
+    {
        
-        LightLogic();
+
+        if(GateProgress >= 100)
+        {
+            Win();
+        }
+        else
+        {
+            
+            SpawnEnemys();
+            _gateProgressBarObject.SetActive(true);
+            LightEnergy = 0;
+            GateProgress += _gateIncreaseRate * Time.deltaTime;
+        }
+
+
     }
 
 
+   private void Win()
+   {
+        _winScreen.SetActive(true);
+        _eventSystem.SetSelectedGameObject(_winScreen.transform.Find("Menu").Find("Continue Button ").gameObject);
+        Time.timeScale = 0f;
+        _gateProgressBarObject.SetActive(false);
+        LevelFinished = true;
+   }
 
     private void OreUpdateUI()
     {
@@ -172,7 +268,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        if (_isRecharging)
+        if (_isLightRecharging)
         {
             if (LightEnergy < 100f)
             {
@@ -181,7 +277,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                _isRecharging = false;
+                _isLightRecharging = false;
             }
         }
         else
@@ -190,12 +286,14 @@ public class GameManager : MonoBehaviour
             {
                 float energyDecrease = _energyDecreaseRate * Time.deltaTime;
                 LightEnergy = Mathf.Max(0f, LightEnergy - energyDecrease);
+                _spawnTimer = 0;
+              
             }
             else
             {
                 _audioSource.Play();
                 IsMinecartDriving = false;
-                _isRecharging = true;
+                _isLightRecharging = true;
             }
         }
 
@@ -279,7 +377,7 @@ public class GameManager : MonoBehaviour
     #region Inputs
     public void ToggleMinecartDriving(InputAction.CallbackContext context)
     {
-        if (context.performed && !_isRecharging)
+        if (context.performed && !_isLightRecharging)
         {
             IsMinecartDriving = !IsMinecartDriving;
             HasGameStarted = true;

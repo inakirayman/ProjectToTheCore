@@ -12,7 +12,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause(InputAction.CallbackContext context)
     {
-        if (context.performed )
+        if (context.performed && !GameManager.Instance.LevelFinished)
         {
             if (GameIsPaused)
             {

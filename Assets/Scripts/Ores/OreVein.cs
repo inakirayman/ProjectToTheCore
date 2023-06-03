@@ -6,9 +6,9 @@ using UnityEngine;
 public class OreVein : MonoBehaviour
 {
     public BaseOre Ore;
-
+    public GameObject ParticleEffect;
     private int _hitPoints;
-
+    
 
 
     void Start()
@@ -22,6 +22,7 @@ public class OreVein : MonoBehaviour
             Debug.Log($"OreVein model is not set in {Ore.name}");
         }
         _hitPoints = Ore.HitPoint;
+      
         Instantiate(Ore.OreVeinModel, transform.position, Quaternion.identity, transform);
     }
 
@@ -29,6 +30,7 @@ public class OreVein : MonoBehaviour
     {
         _hitPoints = Ore.Hit(_hitPoints,value);
 
+        Instantiate(ParticleEffect, transform.position, Quaternion.identity, transform);
         if (_hitPoints <= 0)
         {
             Ore.Break(transform.position + new Vector3(0,0.5f,0));

@@ -59,7 +59,7 @@ public class EnemySpawner : MonoBehaviour
             attempts++;
         }
 
-        Debug.Log("Spawned " + spawnedEnemies + " enemies.");
+        //Debug.Log("Spawned " + spawnedEnemies + " enemies.");
     }
 
     public void SpawnEnemies(SpawnArea spawnArea)
@@ -79,7 +79,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        Debug.Log("Spawned " + spawnedEnemies + " enemies in the " + spawnArea.SpawnPoint.name);
+       // Debug.Log("Spawned " + spawnedEnemies + " enemies in the " + spawnArea.SpawnPoint.name);
     }
 
     private Vector3 GetRandomSpawnPosition(SpawnArea spawnArea)

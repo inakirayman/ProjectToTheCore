@@ -32,6 +32,15 @@ public  class BaseEnemy : MonoBehaviour
         _moveSpeed = Random.Range(_moveSpeedRange.x, _moveSpeedRange.y);
     }
 
+    private void Update()
+    {
+        if (GameManager.Instance.LevelFinished)
+        {
+            Die();
+        }
+    }
+
+
     // Update is called once per frame
     private void FixedUpdate()
     {

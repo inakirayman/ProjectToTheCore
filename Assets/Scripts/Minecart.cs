@@ -29,6 +29,7 @@ public class Minecart : MonoBehaviour
     #region Waypoints
     private int _currentWaypointIndex;
     private List<Transform> _waypoints;
+    private bool _hasReachedGate =false;
     #endregion
 
 
@@ -69,6 +70,7 @@ public class Minecart : MonoBehaviour
 
     private void Update()
     {
+
         LightLogic();
 
 
@@ -79,7 +81,7 @@ public class Minecart : MonoBehaviour
     private void FixedUpdate()
     {
         //Check if ther minecart has fuel.
-        if(GameManager.Instance.MinecartFuel > 0 && GameManager.Instance.IsMinecartDriving)
+        if(GameManager.Instance.MinecartFuel > 0 && GameManager.Instance.IsMinecartDriving && !_hasReachedGate)
         {
             if (_currentWaypointIndex < _waypoints.Count)
             {
@@ -147,7 +149,9 @@ public class Minecart : MonoBehaviour
 
     private void OnMinecartReachEnd()
     {
-        // Custom logic when the minecart reaches the end (e.g., end game, reset, etc.)
+        _hasReachedGate = true;
+        GameManager.Instance.IsGateCharging = true;
+        DimLight();
     }
     #endregion
 
@@ -161,37 +165,39 @@ public class Minecart : MonoBehaviour
         {
             BrightenLight();
 
-            foreach (GameObject gameObject in SideLights)
-            {
-                gameObject.SetActive(true);
-            }
-
-
         }
         else if (GameManager.Instance.LightEnergy == 0)
         {
             DimLight();
-
-            foreach (GameObject gameObject in SideLights)
-            {
-                gameObject.SetActive(false);
-            }
         }
 
         if (_targetIntensity != AreaLight.intensity)
+        {
             AreaLight.intensity = Mathf.Lerp(AreaLight.intensity, _targetIntensity, LerpSpeed * Time.deltaTime);
+        }
+            
     }
 
     public void DimLight()
     {
         // Set the target intensity to the minimum intensity
         _targetIntensity = IntensityRange.x;
+
+        foreach (GameObject gameObject in SideLights)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public void BrightenLight()
     {
         // Set the target intensity to the maximum intensity
         _targetIntensity = IntensityRange.y;
+
+        foreach (GameObject gameObject in SideLights)
+        {
+            gameObject.SetActive(true);
+        }
     }
     #endregion
 }

@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-
+  
     public float MovementSpeed = 3f;
 
     [SerializeField]
@@ -16,7 +17,8 @@ public class PlayerController : MonoBehaviour
     private LayerMask _orePickupLayer;
     [SerializeField]
     private LayerMask _minecartLayer;
-
+    [SerializeField]
+    private Animator _animator;
 
 
 
@@ -54,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
         _rb = GetComponent<Rigidbody>();
 
-
+       
       
 
     }
@@ -76,6 +78,7 @@ public class PlayerController : MonoBehaviour
 
         if (horizontalInput != 0 || verticalInput != 0)
         {
+            _animator.SetBool("IsMoving", true);
             Vector3 movementDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
             
@@ -94,6 +97,10 @@ public class PlayerController : MonoBehaviour
             
             _rb.MovePosition(targetPosition);
             _rb.MoveRotation(targetRotation);
+        }
+        else
+        {
+            _animator.SetBool("IsMoving", false);
         }
 
     }
@@ -121,6 +128,7 @@ public class PlayerController : MonoBehaviour
                 colliders = Physics.OverlapSphere(transform.position, _interactRadius, _oreLayer);
                 if (colliders.Length > 0)
                 {
+                    _animator.SetTrigger("IsMining");
                     colliders[0].GetComponent<OreVein>().Mine(1);
                     return;
                 }
@@ -166,9 +174,10 @@ public class PlayerController : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, _interactRadius, _minecartLayer);
         if (colliders.Length > 0)
         {
+            _animator.SetBool("IsMoving", false);   
             return true;
+           
 
-              
         }
         return false;
     }
