@@ -50,7 +50,7 @@ MonoBehaviour:
     type: 3}
   IronOreVeinPrefab: {fileID: 618583215424963347, guid: 8623e6a83efd1c44d9c458d358c83a2c,
     type: 3}
-  CoalOreVeinCount: 3
+  CoalOreVeinCount: 2
   GoldOreVeinCount: 0
   IronOreVeinCount: 1
   SpawnAreaWidth: 5
@@ -106,8 +106,8 @@ MonoBehaviour:
     type: 3}
   IronOreVeinPrefab: {fileID: 618583215424963347, guid: 8623e6a83efd1c44d9c458d358c83a2c,
     type: 3}
-  CoalOreVeinCount: 3
-  GoldOreVeinCount: 0
+  CoalOreVeinCount: 2
+  GoldOreVeinCount: 1
   IronOreVeinCount: 0
   SpawnAreaWidth: 5
   SpawnAreaHeight: 18
